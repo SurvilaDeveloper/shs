@@ -1,0 +1,55 @@
+---
+// src/pages/contacto.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BRAND, buildWhatsAppLink } from "../lib/siteData";
+
+const wa = buildWhatsAppLink(
+    "Hola Gabriel, quería pedir presupuesto. Estoy en Zona Sur (Quilmes/Avellaneda/Lanús).",
+);
+
+const telHref = `tel:${String(BRAND.phone || "").replace(/\s/g, "")}`;
+
+const card =
+    "rounded-2xl border border-slate-800 bg-slate-950/40 p-6 hover:bg-slate-950/60 transition";
+const linkHint = "text-sm font-semibold text-slate-300";
+---
+
+<BaseLayout
+    title={`Contacto | ${BRAND.name}`}
+    description="Contacto para presupuesto por WhatsApp. Atención en AMBA con epicentro en Quilmes, Avellaneda y Lanús."
+>
+    <div class="mx-auto max-w-6xl px-4 py-10">
+        <h1 class="text-3xl font-extrabold text-slate-100">Contacto</h1>
+
+        <p class="mt-3 text-slate-300 max-w-2xl">
+            Para un presupuesto rápido, escribime por WhatsApp con tu zona y una
+            breve descripción (si podés, agregá una foto).
+        </p>
+
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+            <!-- WhatsApp -->
+            <a class={card} href={wa} target="_blank" rel="noreferrer">
+                <p class="text-lg font-extrabold text-slate-100">WhatsApp</p>
+                <p class="mt-2 text-sm text-slate-300">
+                    Responderé a la brevedad.
+                </p>
+                <p class={`mt-4 ${linkHint}`}>
+                    Abrir WhatsApp <span class="text-emerald-500">→</span>
+                </p>
+            </a>
+
+            <!-- Llamar -->
+            <a class={card} href={telHref}>
+                <p class="text-lg font-extrabold text-slate-100">Llamar</p>
+                <p class="mt-2 text-sm text-slate-300">{BRAND.phone}</p>
+                <p class={`mt-4 ${linkHint}`}>
+                    Llamar ahora <span class="text-slate-400">→</span>
+                </p>
+            </a>
+        </div>
+
+        <div class="mt-8 text-sm text-slate-400">
+            Horarios: Lun a Sáb · Sin urgencias 24hs.
+        </div>
+    </div>
+</BaseLayout>

@@ -1,0 +1,239 @@
+---
+// src/layouts/BaseLayout.astro
+import "../styles/global.css";
+import { BRAND } from "../lib/siteData";
+import LogoSHS from "../components/LogoSHS.astro";
+
+const {
+  title = BRAND.name,
+  description = "Electricidad, plomería, carpintería, herrería y reparaciones generales. Atención en AMBA con epicentro en Quilmes, Avellaneda y Lanús.",
+} = Astro.props;
+
+const siteUrl =
+  Astro.site?.toString() ?? `${Astro.url.protocol}//${Astro.url.host}`;
+
+const telHref = `tel:${String(BRAND.phone || "").replace(/\s/g, "")}`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": `${siteUrl}/#localbusiness`,
+  name: BRAND.name,
+  url: siteUrl,
+  telephone: BRAND.phone,
+  areaServed: ["Quilmes", "Avellaneda", "Lanús", "AMBA"],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Quilmes",
+    addressRegion: "Buenos Aires",
+    addressCountry: "AR",
+  },
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <script type="application/ld+json">
+      {JSON.stringify(schema)}
+    </script>
+  </head>
+
+  <body class="bg-slate-950 text-slate-100">
+    <!-- NAVBAR GLOBAL (dark + responsive) -->
+    <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="flex h-16 items-center justify-between">
+          <!-- Marca -->
+          <a
+            href="/"
+            class="flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+          >
+            <span class="text-slate-100">
+              <LogoSHS size={38} className="text-slate-100" />
+            </span>
+            <div class="leading-tight">
+              <p class="text-sm font-extrabold tracking-tight text-slate-100">
+                {BRAND.name}
+              </p>
+              <p class="text-xs text-slate-400">Quilmes · Avellaneda · Lanús · AMBA</p>
+            </div>
+          </a>
+
+          <!-- Desktop nav -->
+          <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+            <a class="text-slate-200 hover:text-white transition" href="/">Inicio</a>
+            <a class="text-slate-200 hover:text-white transition" href="/servicios">Servicios</a>
+            <a class="text-slate-200 hover:text-white transition" href="/trabajos">Trabajos</a>
+            <a class="text-slate-200 hover:text-white transition" href="/contacto">Contacto</a>
+          </nav>
+
+          <!-- Desktop CTA -->
+          <div class="hidden md:flex items-center gap-3">
+            <a
+              href={telHref}
+              class="rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-900 transition
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+            >
+              Llamar
+            </a>
+            <a
+              href={`https://wa.me/${BRAND.whatsappNumber}`}
+              target="_blank"
+              rel="noreferrer"
+              class="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-extrabold text-white hover:bg-emerald-700 transition
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            >
+              WhatsApp
+            </a>
+          </div>
+
+          <!-- Mobile button -->
+          <button
+            id="navBtn"
+            type="button"
+            class="md:hidden inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-950 p-2 text-slate-100 hover:bg-slate-900 transition
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 7h16M4 12h16M4 17h16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu panel -->
+        <div id="mobileMenu" class="md:hidden hidden pb-4">
+          <div class="rounded-2xl border border-slate-800 bg-slate-950 p-3">
+            <nav class="flex flex-col gap-2 text-sm font-semibold">
+              <a class="rounded-xl px-3 py-2 text-slate-100 hover:bg-slate-900 transition" href="/">Inicio</a>
+              <a class="rounded-xl px-3 py-2 text-slate-100 hover:bg-slate-900 transition" href="/servicios">Servicios</a>
+              <a class="rounded-xl px-3 py-2 text-slate-100 hover:bg-slate-900 transition" href="/trabajos">Trabajos</a>
+              <a class="rounded-xl px-3 py-2 text-slate-100 hover:bg-slate-900 transition" href="/contacto">Contacto</a>
+            </nav>
+
+            <div class="mt-3 grid grid-cols-2 gap-2">
+              <a
+                href={telHref}
+                class="rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-center text-sm font-semibold text-slate-100 hover:bg-slate-900 transition"
+              >
+                Llamar
+              </a>
+              <a
+                href={`https://wa.me/${BRAND.whatsappNumber}`}
+                target="_blank"
+                rel="noreferrer"
+                class="rounded-xl bg-emerald-600 px-3 py-2 text-center text-sm font-extrabold text-white hover:bg-emerald-700 transition"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script simple (sin React) -->
+      <script is:inline>
+        const btn = document.getElementById("navBtn");
+        const menu = document.getElementById("mobileMenu");
+
+        function closeMenu() {
+          if (!btn || !menu) return;
+          menu.classList.add("hidden");
+          btn.setAttribute("aria-expanded", "false");
+        }
+
+        function toggleMenu() {
+          if (!btn || !menu) return;
+          const isOpen = !menu.classList.contains("hidden");
+          menu.classList.toggle("hidden");
+          btn.setAttribute("aria-expanded", String(!isOpen));
+        }
+
+        if (btn && menu) {
+          btn.addEventListener("click", toggleMenu);
+
+          // Cierra el menú al navegar (mejor UX en móvil)
+          menu.addEventListener("click", (e) => {
+            const a = e.target && e.target.closest && e.target.closest("a");
+            if (a) closeMenu();
+          });
+
+          // Escape para cerrar
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeMenu();
+          });
+
+          // Click fuera para cerrar
+          document.addEventListener("click", (e) => {
+            if (menu.classList.contains("hidden")) return;
+            const target = e.target;
+            const clickedInside =
+              (btn && btn.contains(target)) || (menu && menu.contains(target));
+            if (!clickedInside) closeMenu();
+          });
+        }
+      </script>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="min-h-[calc(100vh-64px)]">
+      <slot />
+    </main>
+
+    <!-- FOOTER (dark) -->
+    <footer class="mt-16 border-t border-slate-800 bg-slate-950">
+      <div class="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-300">
+        <div class="grid gap-6 md:grid-cols-3">
+          <div>
+            <p class="font-extrabold text-slate-100">{BRAND.name}</p>
+            <p class="mt-2 text-slate-300">
+              Electricidad · Plomería · Carpintería · Herrería · Reparaciones
+            </p>
+          </div>
+
+          <div>
+            <p class="font-bold text-slate-100">Zonas</p>
+            <p class="mt-2 text-slate-300">Quilmes · Avellaneda · Lanús · Zona Sur · AMBA</p>
+          </div>
+
+          <div>
+            <p class="font-bold text-slate-100">Contacto</p>
+            <p class="mt-2 text-slate-300">Tel: {BRAND.phone}</p>
+            <p class="mt-1">
+              <a class="underline underline-offset-4 hover:text-white transition" href="/contacto">
+                Ver opciones
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 text-xs text-slate-500">
+          © {new Date().getFullYear()} {BRAND.name}. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,17 +1,299 @@
 ---
+// src/pages/index.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BRAND, SERVICES, ZONES, WORKS } from "../lib/siteData";
+import { CTAWhatsApp } from "../components/CTAWhatsApp";
 
+// clases reutilizables (evita repetición y mantiene consistencia)
+const card = "rounded-3xl border border-slate-800 bg-slate-950/40 p-6 md:p-10";
+const cardInner = "rounded-2xl border border-slate-800 bg-slate-950/50 p-5";
+const cardSoft =
+	"rounded-3xl border border-slate-800 bg-slate-900/30 p-6 md:p-10";
+
+const h2 = "text-xl md:text-2xl font-extrabold text-slate-100";
+const link =
+	"text-sm font-semibold text-slate-300 hover:text-white underline underline-offset-4 transition";
+
+const serviceCard =
+	"rounded-2xl border border-slate-800 bg-slate-950/40 p-5 hover:bg-slate-950/60 transition";
+const workCard = "rounded-2xl border border-slate-800 bg-slate-950/40 p-5";
+const chip =
+	"rounded-full border border-slate-800 bg-slate-950/40 px-3 py-1 text-sm font-semibold text-slate-200";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	title={`${BRAND.name} | Servicios del Hogar en Quilmes, Avellaneda y Lanús`}
+	description="Electricista, plomería, carpintería, herrería y reparaciones generales. Atención en AMBA con foco en Quilmes, Avellaneda y Lanús. Presupuesto por WhatsApp."
+>
+	<div class="mx-auto max-w-6xl px-4">
+		<!-- HERO -->
+		<section class="py-12 md:py-16">
+			<div class={card}>
+				<div
+					class="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center"
+				>
+					<div>
+						<p
+							class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400"
+						>
+							Zona Sur · AMBA
+						</p>
+
+						<h1
+							class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-100 leading-tight"
+						>
+							Servicios del hogar con
+							<span class="block text-slate-200">
+								trabajo prolijo y presupuesto claro
+							</span>
+						</h1>
+
+						<p
+							class="mt-5 text-slate-300 text-base md:text-lg max-w-2xl"
+						>
+							Electricidad, plomería, carpintería, herrería y
+							reparaciones generales. Atención en{" "}
+							<span class="font-semibold text-slate-100"
+								>Quilmes</span
+							>,{" "}
+							<span class="font-semibold text-slate-100"
+								>Avellaneda</span
+							> y{" "}
+							<span class="font-semibold text-slate-100"
+								>Lanús</span
+							>.
+						</p>
+
+						<div
+							class="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center"
+						>
+							<CTAWhatsApp
+								client:load
+								label="Pedir presupuesto por WhatsApp"
+								className="w-full sm:w-auto"
+							/>
+							<a
+								href="/servicios"
+								class="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-950 px-6 py-3 font-bold text-slate-100 hover:bg-slate-900 transition"
+							>
+								Ver servicios
+							</a>
+						</div>
+
+						<p class="mt-4 text-sm text-slate-400">
+							Atención de lunes a sábado · Sin urgencias 24hs
+						</p>
+					</div>
+
+					<!-- Card confianza -->
+					<div class={cardInner}>
+						<p class="font-extrabold text-slate-100">
+							Cómo trabajo
+						</p>
+
+						<ul class="mt-3 space-y-2 text-sm text-slate-300">
+							<li class="flex gap-2">
+								<span class="font-bold text-emerald-500">✓</span
+								>
+								<span>Diagnóstico claro y opciones.</span>
+							</li>
+							<li class="flex gap-2">
+								<span class="font-bold text-emerald-500">✓</span
+								>
+								<span>Presupuesto antes de empezar.</span>
+							</li>
+							<li class="flex gap-2">
+								<span class="font-bold text-emerald-500">✓</span
+								>
+								<span
+									>Terminación prolija y materiales adecuados.</span
+								>
+							</li>
+						</ul>
+
+						<div
+							class="mt-4 rounded-xl border border-slate-800 bg-slate-950/60 p-4"
+						>
+							<p
+								class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400"
+							>
+								Epicentro
+							</p>
+							<p class="mt-1 font-extrabold text-slate-100">
+								{BRAND.baseCity} (Zona Sur)
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CONFIANZA SHS -->
+		<section class="py-10">
+			<div class={cardSoft}>
+				<div class="max-w-3xl">
+					<h2
+						class="text-2xl md:text-3xl font-extrabold text-slate-100"
+					>
+						¿Por qué elegir SHS?
+					</h2>
+
+					<p class="mt-3 text-slate-300">
+						Trabajo de manera directa, clara y responsable. Estas
+						son algunas cosas que los clientes valoran:
+					</p>
+				</div>
+
+				<div class="mt-8 grid gap-6 md:grid-cols-2">
+					<div
+						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
+					>
+						<p class="font-semibold text-slate-100">
+							Te explico el problema antes de empezar
+						</p>
+						<p class="mt-2 text-sm text-slate-300">
+							Siempre te cuento qué está pasando y qué opciones
+							hay. No hago trabajos sin que entiendas qué se va a
+							hacer.
+						</p>
+					</div>
+
+					<div
+						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
+					>
+						<p class="font-semibold text-slate-100">
+							Acordamos el presupuesto antes
+						</p>
+						<p class="mt-2 text-sm text-slate-300">
+							El precio se habla antes de comenzar. Sin sorpresas
+							ni cambios inesperados.
+						</p>
+					</div>
+
+					<div
+						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
+					>
+						<p class="font-semibold text-slate-100">
+							Trabajo prolijo y cuidado del espacio
+						</p>
+						<p class="mt-2 text-sm text-slate-300">
+							Cuido tu casa como si fuera la mía. Orden, limpieza
+							y respeto por el lugar.
+						</p>
+					</div>
+
+					<div
+						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
+					>
+						<p class="font-semibold text-slate-100">
+							Atención directa conmigo
+						</p>
+						<p class="mt-2 text-sm text-slate-300">
+							No hay intermediarios. Te atiendo yo, realizo el
+							trabajo yo y respondo por el trabajo yo.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- SERVICIOS -->
+		<section class="py-6">
+			<div class="flex items-end justify-between gap-4">
+				<h2 class={h2}>Servicios</h2>
+				<a class={link} href="/servicios">Ver todos</a>
+			</div>
+
+			<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					SERVICES.map((s) => (
+						<a href={`/servicios/${s.slug}`} class={serviceCard}>
+							<p class="text-lg font-extrabold text-slate-100">
+								{s.title}
+							</p>
+							<p class="mt-2 text-sm text-slate-300">{s.short}</p>
+							<p class="mt-4 text-sm font-semibold text-slate-300">
+								Ver detalle{" "}
+								<span class="text-slate-400">→</span>
+							</p>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- TRABAJOS REALIZADOS -->
+		<section class="py-10">
+			<div class="flex items-end justify-between gap-4">
+				<div>
+					<h2 class={h2}>Trabajos realizados</h2>
+					<p class="mt-2 text-sm text-slate-300">
+						Ejemplos de trabajos recientes (Zona Sur / AMBA).
+					</p>
+				</div>
+				<a class={link} href="/trabajos">Ver más</a>
+			</div>
+
+			<div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					WORKS.slice(0, 6).map((w) => (
+						<div class={workCard}>
+							<div class="rounded-xl border border-slate-800 bg-slate-900/30 aspect-4/3 overflow-hidden flex items-center justify-center">
+								{w.image ? (
+									// eslint-disable-next-line @next/next/no-img-element
+									<img
+										src={w.image}
+										alt={w.alt ?? w.title}
+										class="h-full w-full object-cover"
+										loading="lazy"
+									/>
+								) : (
+									<div class="p-4 text-center">
+										<p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+											{w.service}
+										</p>
+										<p class="mt-2 font-extrabold text-slate-100">
+											{w.zone}
+										</p>
+									</div>
+								)}
+							</div>
+
+							<p class="mt-4 text-base font-extrabold text-slate-100">
+								{w.title}
+							</p>
+							<p class="mt-1 text-sm text-slate-300">
+								<span class="font-semibold text-slate-200">
+									{w.service}
+								</span>{" "}
+								· {w.zone}
+							</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="mt-6">
+				<CTAWhatsApp
+					client:load
+					label="Consultá disponibilidad"
+					className="w-full sm:w-auto"
+					message="Hola Gabriel, vi tus trabajos realizados y quería consultarte por un presupuesto. Estoy en Zona Sur (Quilmes/Avellaneda/Lanús)."
+				/>
+			</div>
+		</section>
+
+		<!-- ZONAS -->
+		<section class="py-10">
+			<h2 class={h2}>Zonas de trabajo</h2>
+			<p class="mt-2 text-sm text-slate-300">
+				Cobertura en AMBA con foco en Zona Sur: Quilmes, Avellaneda y
+				Lanús.
+			</p>
+
+			<div class="mt-4 flex flex-wrap gap-2">
+				{ZONES.slice(0, 14).map((z) => <span class={chip}>{z}</span>)}
+			</div>
+		</section>
+	</div>
+</BaseLayout>

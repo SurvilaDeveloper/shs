@@ -1,0 +1,85 @@
+---
+// src/pages/servicios/[slug].astro
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { BRAND, SERVICES } from "../../lib/siteData";
+import { CTAWhatsApp } from "../../components/CTAWhatsApp";
+
+export function getStaticPaths() {
+    return SERVICES.map((s) => ({
+        params: { slug: s.slug },
+        props: { service: s },
+    }));
+}
+
+const { service } = Astro.props;
+
+// clases reutilizables
+const backLink =
+    "text-sm font-semibold text-slate-300 hover:text-white underline underline-offset-4 transition";
+const card = "rounded-2xl border border-slate-800 bg-slate-950/40 p-6";
+const sideCard = "rounded-2xl border border-slate-800 bg-slate-900/30 p-6";
+const secondaryBtn =
+    "mt-3 inline-flex w-full items-center justify-center rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 font-bold text-slate-100 hover:bg-slate-900 transition";
+---
+
+<BaseLayout
+    title={service?.seoTitle ?? `Servicio | ${BRAND.name}`}
+    description={service?.seoDescription ?? "Servicios del hogar en AMBA."}
+>
+    <div class="mx-auto max-w-6xl px-4 py-10">
+        <a class={backLink} href="/servicios">← Volver a servicios</a>
+
+        <h1 class="mt-4 text-3xl font-extrabold text-slate-100">
+            {service?.title ?? "Servicio"}
+        </h1>
+
+        {
+            service?.description ? (
+                <p class="mt-3 text-slate-300 max-w-2xl">
+                    {service.description}
+                </p>
+            ) : (
+                <p class="mt-3 text-slate-300 max-w-2xl">
+                    Servicio disponible en Zona Sur y AMBA.
+                </p>
+            )
+        }
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <!-- Detalle -->
+            <div class={card}>
+                <p class="font-extrabold text-slate-100">Trabajos habituales</p>
+
+                <ul class="mt-3 list-disc pl-5 text-slate-300">
+                    {(service?.bullets ?? []).map((b) => <li>{b}</li>)}
+                </ul>
+            </div>
+
+            <!-- CTA -->
+            <div class={sideCard}>
+                <p class="font-extrabold text-slate-100">Presupuesto rápido</p>
+                <p class="mt-2 text-sm text-slate-300">
+                    Contame tu zona y qué necesitás (si podés, adjuntá una
+                    foto).
+                </p>
+
+                <div class="mt-4">
+                    <CTAWhatsApp
+                        client:load
+                        label="Escribir por WhatsApp"
+                        className="w-full"
+                        message={`Hola Gabriel, necesito ${String(service?.title ?? "un servicio").toLowerCase()}. Estoy en Zona Sur (Quilmes/Avellaneda/Lanús). ¿Me pasás presupuesto?`}
+                    />
+                </div>
+
+                <a href="/contacto" class={secondaryBtn}>
+                    Ver otras opciones de contacto
+                </a>
+
+                <p class="mt-4 text-xs text-slate-400">
+                    Cobertura: {BRAND.baseCity} · Quilmes · Avellaneda · Lanús · AMBA
+                </p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
