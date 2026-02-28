@@ -2,17 +2,17 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
-
 import tailwindcss from '@tailwindcss/vite';
-
 import sitemap from '@astrojs/sitemap';
 
-const repo = "shs"; // <- EXACTO igual al repo de GitHub
+const repo = "shs";
 
-// https://astro.build/config
 export default defineConfig({
-  site: "https://SurvilaDeveloper.github.io",
-  base: `/${repo}/`,
+  site: "https://surviladeveloper.github.io",
+
+  // SOLO usar base en producción (GitHub Pages)
+  base: import.meta.env.PROD ? `/${repo}/` : "/",
+
   integrations: [react(), sitemap()],
 
   vite: {
