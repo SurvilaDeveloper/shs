@@ -5,6 +5,7 @@ export type ServiceSlug =
     | "carpinteria"
     | "herreria"
     | "durlock"
+    | "pintura"
     | "reparaciones";
 
 export type Service = {
@@ -19,8 +20,8 @@ export type Service = {
 
 export const BRAND = {
     name: "Gabriel Survila – Servicios del Hogar",
-    phone: "+54 9 11 0000-0000", // CAMBIAR
-    whatsappNumber: "5491100000000", // CAMBIAR (sin +, sin espacios)
+    phone: "+54 9 11 5845-1937", // CAMBIAR
+    whatsappNumber: "5491158451937", // CAMBIAR (sin +, sin espacios)
     baseCity: "Quilmes",
     coverage: ["Quilmes", "Avellaneda", "Lanús", "AMBA"],
 };
@@ -59,22 +60,6 @@ export const SERVICES: Service[] = [
         seoTitle: "Electricista en Quilmes, Avellaneda y Lanús | Gabriel Survila",
         seoDescription:
             "Electricista en Quilmes, Avellaneda y Lanús. Instalaciones, reparaciones y mantenimiento eléctrico. Presupuesto claro por WhatsApp.",
-    },
-    {
-        slug: "plomeria",
-        title: "Plomería",
-        short: "Pérdidas, grifería, flexibles y conexiones.",
-        description:
-            "Soluciones duraderas para baños, cocinas y lavaderos. Reparo pérdidas y dejo todo funcionando sin vueltas.",
-        bullets: [
-            "Pérdidas y filtraciones",
-            "Cambio de griferías y flexibles",
-            "Desagües y sifones",
-            "Conexiones de agua y ajustes",
-        ],
-        seoTitle: "Plomero en Quilmes, Avellaneda y Lanús | Gabriel Survila",
-        seoDescription:
-            "Plomería en Quilmes, Avellaneda y Lanús. Pérdidas, griferías, desagües y conexiones. Presupuesto por WhatsApp.",
     },
     {
         slug: "carpinteria",
@@ -126,6 +111,39 @@ export const SERVICES: Service[] = [
             "Colocación de durlock en Quilmes, Avellaneda y Lanús. Mantenimiento y soluciones prácticas. Presupuesto por WhatsApp.",
     },
     {
+        slug: "plomeria",
+        title: "Plomería",
+        short: "Pérdidas, grifería, flexibles y conexiones.",
+        description:
+            "Soluciones duraderas para baños, cocinas y lavaderos. Reparo pérdidas y dejo todo funcionando sin vueltas.",
+        bullets: [
+            "Pérdidas y filtraciones",
+            "Cambio de griferías y flexibles",
+            "Desagües y sifones",
+            "Conexiones de agua y ajustes",
+        ],
+        seoTitle: "Plomero en Quilmes, Avellaneda y Lanús | Gabriel Survila",
+        seoDescription:
+            "Plomería en Quilmes, Avellaneda y Lanús. Pérdidas, griferías, desagües y conexiones. Presupuesto por WhatsApp.",
+    },
+    {
+        slug: "pintura",
+        title: "Pintura de casas",
+        short: "Paredes, aberturas, maderas.",
+        description:
+            "Acabados en paredes y componentes de madera",
+        bullets: [
+            "Enduido y pintura",
+            "Limpieza de barniz y recubrimiento",
+            "Membrana líquida",
+            "Piscinas y pisos",
+        ],
+        seoTitle:
+            "Servicio de pintura del hogar en Quilmes, Avellaneda y Lanús | Gabriel Survila",
+        seoDescription:
+            "Servicios de pintura generales en Quilmes, Avellaneda y Lanús. Mantenimiento y soluciones prácticas. Presupuesto por WhatsApp.",
+    },
+    {
         slug: "reparaciones",
         title: "Reparaciones generales",
         short: "Arreglos, ajustes y mantenimiento del hogar.",
@@ -156,91 +174,14 @@ export type WorkItem = {
     zone: string;
     service: string;
 
-    // ✅ caso simple (una foto)
     image?: string;
-
-    // ✅ caso galería (varias fotos)
     images?: string[];
-
     alt?: string;
 
-    // ✅ SOLO para el modal (si no está, el modal NO se abre)
     modalDescription?: string;
 };
 
 export const WORKS: WorkItem[] = [
-    {
-        id: "porton-01",
-        title: "Portón de garage",
-        zone: "Bernal Oeste",
-        service: "Herrería-carpintaría",
-        images: [
-            "/trabajos/herreria/porton-1.jpg",
-            "/trabajos/herreria/porton-2.jpg",
-            "/trabajos/herreria/porton-3.jpg",
-            "/trabajos/herreria/porton-4.jpg",
-            "/trabajos/herreria/porton-5.jpg",
-            "/trabajos/herreria/porton-6.jpg",
-        ],
-        alt: "Portón de garage",
-        modalDescription: `Se fabricó un portón nuevo para aplicar sin romper las paredes, dejando el marco viejo amurado. Se quitó el portón viejo irrecuperable y se montó el portón nuevo
-        en una mañana para que la vivienda no quedara sin cerramiento. Luego, el cliente puede desamurar el marco viejo y arreglar los bordes de las paredes sin depender del nuevo portón.`,
-    },
-
-    {
-        id: "placard-01",
-        title: "Placard de melamina",
-        zone: "Lanús",
-        service: "Carpintería",
-        images: [
-            "/trabajos/carpinteria/placard.jpg",
-            "/trabajos/carpinteria/placard-1.jpg",
-            "/trabajos/carpinteria/placard-2.jpg",
-            "/trabajos/carpinteria/placard-3.jpg",
-            "/trabajos/carpinteria/placard-4.jpg",
-            "/trabajos/carpinteria/placard-5.jpg",
-        ],
-        alt: "placard melamina",
-        modalDescription: "Pacards en melamina con kit de aluminio para manijones"
-    },
-    {
-        id: "durlock-01",
-        title: "Durlock",
-        zone: "Recoleta",
-        service: "Durlock",
-        images: [
-            "/trabajos/durlock/durlock-1.jpg",
-            "/trabajos/durlock/durlock-2.jpg",
-            "/trabajos/durlock/durlock-3.jpg",
-            "/trabajos/durlock/durlock-4.jpg",
-            "/trabajos/durlock/durlock-5.jpg",
-            "/trabajos/durlock/durlock-6.jpg",
-            "/trabajos/durlock/durlock-7.jpg",
-        ],
-        alt: "durlock colocación",
-        modalDescription: "Una falsa viga y un cielorraso con garganta curva"
-    },
-    {
-        id: "deck-01",
-        title: "Deck en lapacho",
-        zone: "Palermo CABA",
-        service: "Carpintería",
-        images: [
-            "/trabajos/carpinteria/deck/deck-1.jpg",
-            "/trabajos/carpinteria/deck/deck-2.jpg",
-            "/trabajos/carpinteria/deck/deck-3.jpg",
-            "/trabajos/carpinteria/deck/deck-4.jpg",
-            "/trabajos/carpinteria/deck/deck-5.jpg",
-            "/trabajos/carpinteria/deck/deck-6.jpg",
-            "/trabajos/carpinteria/deck/deck-7.jpg",
-            "/trabajos/carpinteria/deck/deck-8.jpg",
-            "/trabajos/carpinteria/deck/deck-9.jpg",
-            "/trabajos/carpinteria/deck/deck-10.jpg",
-        ],
-        alt: "deck lapacho",
-        modalDescription: `Esto es en una terraza de una casa de tres pisos. Había un deck de madera blanda que se deterioró. Entonces, se desmontó el deck para la colocación de la membrana aislante,
-        y se armó un nuevo deck de lapacho. El lapacho es una madera que soporta estar a la intemperie. Hubo que respetar la forma que determinaba la pérgola.`
-    },
     {
         id: "tablero-01",
         title: "Revisión de tablero y protecciones",
@@ -273,6 +214,74 @@ export const WORKS: WorkItem[] = [
         alt: "soldadura en reja",
     },
     {
+        id: "porton-01",
+        title: "Portón de garage",
+        zone: "Bernal Oeste",
+        service: "Herrería-carpintaría",
+        images: [
+            "/trabajos/herreria/porton-1.jpg",
+            "/trabajos/herreria/porton-2.jpg",
+            "/trabajos/herreria/porton-3.jpg",
+            "/trabajos/herreria/porton-4.jpg",
+            "/trabajos/herreria/porton-5.jpg",
+            "/trabajos/herreria/porton-6.jpg",
+        ],
+        image: "/trabajos/herreria/porton-1.jpg",
+        alt: "Portón de garage",
+        modalDescription: `Se fabricó un portón nuevo para aplicar sin romper las paredes, dejando el marco viejo amurado. Se quitó el portón viejo irrecuperable y se montó el portón nuevo
+        en una mañana para que la vivienda no quedara sin cerramiento. Luego, el cliente puede desamurar el marco viejo y arreglar los bordes de las paredes sin depender del nuevo portón.`,
+    },
+
+    {
+        id: "durlock-01",
+        title: "Durlock",
+        zone: "Recoleta",
+        service: "Durlock",
+        images: [
+            "/trabajos/durlock/durlock-1.jpg",
+            "/trabajos/durlock/durlock-2.jpg",
+            "/trabajos/durlock/durlock-3.jpg",
+            "/trabajos/durlock/durlock-4.jpg",
+            "/trabajos/durlock/durlock-5.jpg",
+            "/trabajos/durlock/durlock-6.jpg",
+            "/trabajos/durlock/durlock-7.jpg",
+        ],
+        image: "/trabajos/durlock/durlock-1.jpg",
+        alt: "durlock colocación",
+        modalDescription: "Una falsa viga, un cielorraso con garganta curva y un revestimiento de lana de vidrio con aluminio y durlock",
+    },
+
+    {
+        id: "deck-01",
+        title: "Deck en lapacho",
+        zone: "Palermo CABA",
+        service: "Carpintería",
+        images: [
+            "/trabajos/carpinteria/deck/deck-1.jpg",
+            "/trabajos/carpinteria/deck/deck-2.jpg",
+            "/trabajos/carpinteria/deck/deck-3.jpg",
+            "/trabajos/carpinteria/deck/deck-4.jpg",
+            "/trabajos/carpinteria/deck/deck-5.jpg",
+            "/trabajos/carpinteria/deck/deck-6.jpg",
+            "/trabajos/carpinteria/deck/deck-7.jpg",
+            "/trabajos/carpinteria/deck/deck-8.jpg",
+            "/trabajos/carpinteria/deck/deck-9.jpg",
+            "/trabajos/carpinteria/deck/deck-10.jpg",
+        ],
+        image: "/trabajos/carpinteria/deck/deck-1.jpg",
+        alt: "deck lapacho",
+        modalDescription: `Esto es en una terraza de una casa de tres pisos. Había un deck de madera blanda que se deterioró. Entonces, se desmontó el deck para la colocación de la membrana aislante,
+        y se armó un nuevo deck de lapacho. El lapacho es una madera que soporta estar a la intemperie. Hubo que respetar la forma que determinaba la pérgola.`,
+    },
+    {
+        id: "pintura-01",
+        title: "Pintura",
+        zone: "Bandfield",
+        service: "Pintura",
+        image: "/trabajos/pintura/pintura.jpg",
+        alt: "pintura interior",
+    },
+    {
         id: "reparacion-01",
         title: "Reparaciones generales del hogar",
         zone: "AMBA",
@@ -289,3 +298,85 @@ export const WORKS: WorkItem[] = [
         alt: "intalación de iluminación interior",
     },
 ];
+
+// =========================================
+// About me (video + timeline + SEO) ✅
+// =========================================
+
+export type AboutMeTimelineItem = {
+    title: string;
+    body: string;
+};
+
+export type AboutMeContent = {
+    // SEO
+    seoTitle: string;
+    seoDescription: string;
+
+    // Page content
+    pageTitle: string; // h1
+    intro: string;
+
+    youtubeId: string; // SOLO el id del video
+    videoTitle: string; // title del iframe
+
+    videoCardTitle: string;
+    videoCardSubtitle: string;
+
+    timelineTitle: string;
+    timeline: AboutMeTimelineItem[];
+
+    tipTitle: string;
+    tipBody: string;
+
+    whatsappCtaLabel: string;
+    whatsappMessage: string;
+
+    secondaryCtaLabel: string;
+    secondaryCtaHref: string;
+};
+
+export const ABOUT_ME: AboutMeContent = {
+    // SEO (paso pro ✅)
+    seoTitle: `Acerca de mí | ${BRAND.name}`,
+    seoDescription:
+        "Conocé mi historia y mi forma de trabajar. Prolijidad, comunicación clara y soluciones pensadas para durar. Zona Sur y AMBA.",
+
+    // Contenido
+    pageTitle: "Quién soy y qué hago.",
+    intro:
+        "En este video me presento y enumero los servicios que ofrezco.",
+
+    youtubeId: "rFYwK8NyNk0",
+    videoTitle: "Quién soy – Gabriel Survila",
+
+    videoCardTitle: "Video: lo que ofrezco en SHS",
+    videoCardSubtitle: "Ideal para conocerme antes de pedirme presupuesto",
+
+    timelineTitle: "Mi recorrido (resumen)",
+    timeline: [
+        {
+            title: "Empecé metiéndome en el oficio",
+            body: "Aprendiendo en la práctica: herramientas, materiales y cómo resolver bien los problemas comunes del hogar.",
+        },
+        {
+            title: "Me enfoqué en prolijidad y comunicación",
+            body: "Trabajo ordenado, explicación clara del problema y opciones para que decidas con tranquilidad.",
+        },
+        {
+            title: "Hoy hago trabajos completos y mantenimientos",
+            body: "Electricidad, plomería, carpintería, herrería, pintura, durlock y reparaciones generales en Zona Sur (AMBA a confirmar).",
+        },
+    ],
+
+    tipTitle: "Tip",
+    tipBody:
+        "Si me escribís, decime tu zona y mandame una foto del problema. Te respondo con un presupuesto claro.",
+
+    whatsappCtaLabel: "Consultar por WhatsApp",
+    whatsappMessage:
+        "Hola Gabriel, vi tu video 'Qué hacemos en SHS' y quería consultarte por un trabajo. Estoy en Zona Sur/AMBA.",
+
+    secondaryCtaLabel: "Ver trabajos realizados",
+    secondaryCtaHref: "/trabajos",
+};

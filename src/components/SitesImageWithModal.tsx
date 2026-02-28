@@ -34,22 +34,31 @@ export function SitesImageWithModal({
 
     return (
         <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-                src={imageUrl}
-                alt={alt}
-                className={className}
-                loading="lazy"
-                draggable={false}
-                onDoubleClick={() => {
-                    if (canOpen) setOpen(true);
-                }}
-                onTouchEnd={onTouchEnd}
-                style={{
-                    userSelect: "none",
-                    cursor: canOpen ? "zoom-in" : undefined,
-                }}
-            />
+            {/* Wrapper anti-overflow */}
+            <div className="w-full overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src={imageUrl}
+                    alt={alt}
+                    className={className}
+                    loading="lazy"
+                    draggable={false}
+                    onDoubleClick={() => {
+                        if (canOpen) setOpen(true);
+                    }}
+                    onTouchEnd={onTouchEnd}
+                    style={{
+                        userSelect: "none",
+                        cursor: canOpen ? "zoom-in" : undefined,
+
+                        // ✅ evita overflow en mobile
+                        display: "block",
+                        width: "100%",
+                        maxWidth: "100%",
+                        height: "auto",
+                    }}
+                />
+            </div>
 
             <MediaLightboxModal
                 open={open}
