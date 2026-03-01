@@ -16,8 +16,7 @@ const BASE = import.meta.env.BASE_URL; // siempre termina con "/"
 function withBase(path: string) {
   if (!path) return BASE;
   if (path.startsWith("http")) return path; // externo
-
-  const clean = path.replace(/^\//, "");
+  const clean = path.replace(/^\//, ""); // "/servicios" -> "servicios"
   return `${BASE}${clean}`;
 }
 
@@ -27,7 +26,6 @@ const siteUrl =
 
 const currentUrl = Astro.url.toString();
 
-// OG image absoluto, respetando BASE si es una ruta local
 const absoluteOgImage = ogImage.startsWith("http")
   ? ogImage
   : `${siteUrl}${withBase(ogImage)}`;
@@ -92,7 +90,7 @@ const NAV_ITEMS = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOgImage} />
 
-    <!-- Icons (prefijadas por BASE para Project Pages) -->
+    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     <link rel="apple-touch-icon" href={withBase("/favicon.svg")} />
 
@@ -102,7 +100,6 @@ const NAV_ITEMS = [
     </script>
 
     <style>
-      /* Hide default marker for summary (Safari/Chromium) */
       summary::-webkit-details-marker {
         display: none;
       }
@@ -177,7 +174,6 @@ const NAV_ITEMS = [
               </nav>
             </div>
 
-            <!-- Close when clicking any link inside the menu -->
             <script is:inline>
               (() => {
                 const details = document.getElementById("mobileNav");
@@ -185,18 +181,15 @@ const NAV_ITEMS = [
 
                 const close = () => details.removeAttribute("open");
 
-                // Close on any link click inside the menu
                 details.querySelectorAll("[data-close-mobile-nav]").forEach((el) => {
                   el.addEventListener("click", () => close());
                 });
 
-                // Close when clicking outside
                 document.addEventListener("click", (e) => {
                   if (!details.hasAttribute("open")) return;
                   if (!details.contains(e.target)) close();
                 });
 
-                // Close on ESC
                 document.addEventListener("keydown", (e) => {
                   if (e.key === "Escape") close();
                 });

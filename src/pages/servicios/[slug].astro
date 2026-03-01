@@ -13,6 +13,10 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 
+// Base URL ("/" en local, "/shs/" en GitHub Pages)
+const BASE: string = import.meta.env.BASE_URL;
+const withBase = (path: string): string => `${BASE}${path.replace(/^\//, "")}`;
+
 // clases reutilizables
 const backLink =
     "text-sm font-semibold text-slate-300 hover:text-white underline underline-offset-4 transition";
@@ -27,7 +31,9 @@ const secondaryBtn =
     description={service?.seoDescription ?? "Servicios del hogar en AMBA."}
 >
     <div class="mx-auto max-w-6xl px-4 py-10">
-        <a class={backLink} href="/servicios">← Volver a servicios</a>
+        <a class={backLink} href={withBase("/servicios/")}
+            >← Volver a servicios</a
+        >
 
         <h1 class="mt-4 text-3xl font-extrabold text-slate-100">
             {service?.title ?? "Servicio"}
@@ -72,7 +78,7 @@ const secondaryBtn =
                     />
                 </div>
 
-                <a href="/contacto" class={secondaryBtn}>
+                <a href={withBase("/contacto/")} class={secondaryBtn}>
                     Ver otras opciones de contacto
                 </a>
 

@@ -4,6 +4,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { BRAND, SERVICES, ZONES, WORKS } from "../lib/siteData";
 import { CTAWhatsApp } from "../components/CTAWhatsApp";
 
+// Base URL ("/" en local, "/shs/" en GitHub Pages)
+const BASE: string = import.meta.env.BASE_URL;
+const withBase = (path: string): string => `${BASE}${path.replace(/^\//, "")}`;
+
 // clases reutilizables (evita repetición y mantiene consistencia)
 const card = "rounded-3xl border border-slate-800 bg-slate-950/40 p-6 md:p-10";
 const cardInner = "rounded-2xl border border-slate-800 bg-slate-950/50 p-5";
@@ -43,9 +47,9 @@ const chip =
 							class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-100 leading-tight"
 						>
 							Servicios del hogar con
-							<span class="block text-slate-200">
-								trabajo prolijo y presupuesto claro
-							</span>
+							<span class="block text-slate-200"
+								>trabajo prolijo y presupuesto claro</span
+							>
 						</h1>
 
 						<p
@@ -77,7 +81,7 @@ const chip =
 								className="w-full sm:w-auto"
 							/>
 							<a
-								href="/servicios"
+								href={withBase("/servicios/")}
 								class="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-950 px-6 py-3 font-bold text-slate-100 hover:bg-slate-900 transition"
 							>
 								Ver servicios
@@ -133,86 +137,20 @@ const chip =
 			</div>
 		</section>
 
-		<!-- CONFIANZA SHS -->
-		<section class="py-10">
-			<div class={cardSoft}>
-				<div class="max-w-3xl">
-					<h2
-						class="text-2xl md:text-3xl font-extrabold text-slate-100"
-					>
-						¿Por qué elegir SHS?
-					</h2>
-
-					<p class="mt-3 text-slate-300">
-						Trabajo de manera directa, clara y responsable. Estas
-						son algunas cosas que los clientes valoran:
-					</p>
-				</div>
-
-				<div class="mt-8 grid gap-6 md:grid-cols-2">
-					<div
-						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
-					>
-						<p class="font-semibold text-slate-100">
-							Te explico el problema antes de empezar
-						</p>
-						<p class="mt-2 text-sm text-slate-300">
-							Siempre te cuento qué está pasando y qué opciones
-							hay. No hago trabajos sin que entiendas qué se va a
-							hacer.
-						</p>
-					</div>
-
-					<div
-						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
-					>
-						<p class="font-semibold text-slate-100">
-							Acordamos el presupuesto antes
-						</p>
-						<p class="mt-2 text-sm text-slate-300">
-							El precio se habla antes de comenzar. Sin sorpresas
-							ni cambios inesperados.
-						</p>
-					</div>
-
-					<div
-						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
-					>
-						<p class="font-semibold text-slate-100">
-							Trabajo prolijo y cuidado del espacio
-						</p>
-						<p class="mt-2 text-sm text-slate-300">
-							Cuido tu casa como si fuera la mía. Orden, limpieza
-							y respeto por el lugar.
-						</p>
-					</div>
-
-					<div
-						class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"
-					>
-						<p class="font-semibold text-slate-100">
-							Atención directa conmigo
-						</p>
-						<p class="mt-2 text-sm text-slate-300">
-							No hay intermediarios. Te atiendo yo, realizo el
-							trabajo yo y respondo por el trabajo yo.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-
 		<!-- SERVICIOS -->
 		<section class="py-6">
 			<div class="flex items-end justify-between gap-4">
 				<h2 class={h2}>Servicios</h2>
-				<a class={link} href="/servicios">Ver todos</a>
+				<a class={link} href={withBase("/servicios/")}>Ver todos</a>
 			</div>
 
 			<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{
 					SERVICES.map((s) => (
-						<a href={`/servicios/${s.slug}`} class={serviceCard}>
+						<a
+							href={withBase(`/servicios/${s.slug}/`)}
+							class={serviceCard}
+						>
 							<p class="text-lg font-extrabold text-slate-100">
 								{s.title}
 							</p>
@@ -236,7 +174,7 @@ const chip =
 						Ejemplos de trabajos recientes (Zona Sur / AMBA).
 					</p>
 				</div>
-				<a class={link} href="/trabajos">Ver más</a>
+				<a class={link} href={withBase("/trabajos/")}>Ver más</a>
 			</div>
 
 			<div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
