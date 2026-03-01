@@ -5,10 +5,13 @@ import { BRAND, WORKS } from "../lib/siteData";
 import { CTAWhatsApp } from "../components/CTAWhatsApp";
 import { ImagesSwiperSites } from "../components/ImagesSwiperSites";
 import { SitesImageWithModal } from "../components/SitesImageWithModal";
+import { assetUrl } from "../lib/urls";
 
 function toMediaMap(urls: string[]) {
+    // ✅ normalizamos cada url con BASE_URL antes de pasarlo al swiper
+    const normalized = (urls ?? []).filter(Boolean).map((u) => assetUrl(u));
     return Object.fromEntries(
-        urls.map((url, idx) => [idx + 1, { id: idx + 1, url }]),
+        normalized.map((url, idx) => [idx + 1, { id: idx + 1, url }]),
     );
 }
 
@@ -64,7 +67,7 @@ function hasModalDesc(w: any) {
                                         {w.image ? (
                                             <SitesImageWithModal
                                                 client:load
-                                                imageUrl={w.image}
+                                                imageUrl={assetUrl(w.image)}
                                                 alt={alt}
                                                 title={title}
                                                 text={modalText}

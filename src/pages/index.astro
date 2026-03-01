@@ -3,6 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { BRAND, SERVICES, ZONES, WORKS } from "../lib/siteData";
 import { CTAWhatsApp } from "../components/CTAWhatsApp";
+import { assetUrl } from "../lib/urls";
 
 // Base URL ("/" en local, "/shs/" en GitHub Pages)
 const BASE: string = import.meta.env.BASE_URL;
@@ -185,7 +186,7 @@ const chip =
 								{w.image ? (
 									// eslint-disable-next-line @next/next/no-img-element
 									<img
-										src={w.image}
+										src={assetUrl(w.image)}
 										alt={w.alt ?? w.title}
 										class="h-full w-full object-cover"
 										loading="lazy"
