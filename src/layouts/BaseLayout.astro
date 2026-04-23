@@ -202,6 +202,46 @@ const NAV_ITEMS = [
               ))
             }
           </nav>
+
+          <details class="relative md:hidden">
+            <summary
+              class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg border border-slate-700 bg-slate-900/80 text-slate-100 transition hover:bg-slate-800"
+            >
+              <span class="sr-only">Abrir menú de navegación</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-5 w-5"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="5" r="2"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+                <circle cx="12" cy="19" r="2"></circle>
+              </svg>
+            </summary>
+
+            <nav
+              class="absolute right-0 top-12 min-w-[220px] overflow-hidden rounded-xl border border-slate-800 bg-slate-950 shadow-2xl"
+              aria-label="Navegación móvil"
+            >
+              <ul class="py-2">
+                {
+                  NAV_ITEMS.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        class="block px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-slate-900 hover:text-white"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+          </details>
         </div>
       </div>
     </header>
