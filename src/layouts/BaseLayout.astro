@@ -166,6 +166,21 @@ const NAV_ITEMS = [
       set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")}
     />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6P36DL1J7D"
+    ></script>
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag("js", new Date());
+      gtag("config", "G-6P36DL1J7D");
+    </script>
+
     <style>
       summary::-webkit-details-marker {
         display: none;
