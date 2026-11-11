@@ -6,7 +6,7 @@ import LogoSHS from "../components/LogoSHS.astro";
 
 const {
   title = BRAND.name,
-  description = "Electricidad, plomería, carpintería, herrería y reparaciones generales en Quilmes, Avellaneda, Lanús y AMBA.",
+  description = "Electricidad, plomería, carpintería, armado de muebles importados, herrería y reparaciones generales en Quilmes, Avellaneda, Lanús y AMBA.",
   ogImage = "/og.jpg",
   serviceSchema = null,
 } = Astro.props;
@@ -86,23 +86,29 @@ const servicesListSchema = {
       "@type": "ListItem",
       position: 4,
       url: serviciosUrl,
-      name: "Herrería",
+      name: "Armado de muebles importados",
     },
     {
       "@type": "ListItem",
       position: 5,
       url: serviciosUrl,
-      name: "Colocación de durlock",
+      name: "Herrería",
     },
     {
       "@type": "ListItem",
       position: 6,
       url: serviciosUrl,
-      name: "Pintura",
+      name: "Colocación de durlock",
     },
     {
       "@type": "ListItem",
       position: 7,
+      url: serviciosUrl,
+      name: "Pintura",
+    },
+    {
+      "@type": "ListItem",
+      position: 8,
       url: serviciosUrl,
       name: "Reparaciones generales",
     },

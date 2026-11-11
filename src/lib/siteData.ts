@@ -3,6 +3,7 @@ export type ServiceSlug =
     | "electricista"
     | "plomeria"
     | "carpinteria"
+    | "armado"
     | "herreria"
     | "durlock"
     | "pintura"
@@ -68,6 +69,7 @@ export const SERVICES: Service[] = [
         description:
             "Arreglo puertas, muebles y detalles que complican el día a día. Terminación prolija y materiales adecuados.",
         bullets: [
+            "Armado de muebles importados",
             "Puertas que rozan / cierran mal",
             "Ajuste de bisagras y herrajes",
             "Reparación de muebles",
@@ -76,6 +78,23 @@ export const SERVICES: Service[] = [
         seoTitle: "Carpintero en Quilmes, Avellaneda y Lanús | Gabriel Survila",
         seoDescription:
             "Carpintería en Quilmes, Avellaneda y Lanús. Puertas, herrajes, muebles y soluciones a medida. Trabajo confiable.",
+    },
+    {
+        slug: "armado",
+        title: "Armado de muebles importados",
+        short: "Armado de muebles importados, ajustes, reparaciones y mejoras en madera.",
+        description:
+            "Armado de muebles y otras soluciones sobre muebles ya fabricados. Terminación prolija y materiales adecuados.",
+        bullets: [
+            "Armado de muebles importados",
+            "Puertas que rozan / cierran mal",
+            "Ajuste de bisagras y herrajes",
+            "Reparación de muebles",
+            "Estantes y soluciones a medida",
+        ],
+        seoTitle: "Armado de muebles importados en Quilmes, Avellaneda y Lanús | Gabriel Survila",
+        seoDescription:
+            "Carpintería en Quilmes, Avellaneda y Lanús. Armado de muebles importados y soluciones a medida. Trabajo confiable.",
     },
     {
         slug: "herreria",
