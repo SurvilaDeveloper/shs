@@ -17,6 +17,21 @@ export type Service = {
     bullets: string[];
     seoTitle: string;
     seoDescription: string;
+    // Contenido adicional para servicios que necesitan una explicación propia.
+    details?: {
+        heading: string;
+        paragraphs: string[];
+        stepsHeading: string;
+        steps: string[];
+        estimateHint: string;
+    };
+    whatsappMessage?: string;
+    // Imagen de presentación opcional para la ficha del servicio.
+    heroImage?: {
+        src: string;
+        alt: string;
+        caption?: string;
+    };
 };
 
 export const BRAND = {
@@ -69,10 +84,9 @@ export const SERVICES: Service[] = [
         description:
             "Arreglo puertas, muebles y detalles que complican el día a día. Terminación prolija y materiales adecuados.",
         bullets: [
-            "Armado de muebles importados",
-            "Puertas que rozan / cierran mal",
-            "Ajuste de bisagras y herrajes",
-            "Reparación de muebles",
+            "Puertas de madera que rozan o cierran mal",
+            "Ajuste de bisagras, guías y herrajes",
+            "Reparación de muebles ya armados",
             "Estantes y soluciones a medida",
         ],
         seoTitle: "Carpintero en Quilmes, Avellaneda y Lanús | Gabriel Survila",
@@ -82,19 +96,40 @@ export const SERVICES: Service[] = [
     {
         slug: "armado",
         title: "Armado de muebles importados",
-        short: "Armado de muebles importados, ajustes, reparaciones y mejoras en madera.",
+        heroImage: {
+            src: "/servicios/armado-muebles-importados.webp",
+            alt: "Técnico ensamblando en un domicilio un mueble modular desarmado en caja, con herramientas, herrajes e instructivo de montaje",
+            caption: "Imagen ilustrativa del servicio, generada digitalmente.",
+        },
+        short: "¿Compraste un mueble desarmado en caja? Consultá por el armado a domicilio.",
         description:
-            "Armado de muebles y otras soluciones sobre muebles ya fabricados. Terminación prolija y materiales adecuados.",
+            "Armado a domicilio de muebles importados que llegan desarmados en caja, con sus piezas, tornillos y herrajes. Ensamblado y ajustes finales según el modelo.",
         bullets: [
-            "Armado de muebles importados",
-            "Puertas que rozan / cierran mal",
-            "Ajuste de bisagras y herrajes",
-            "Reparación de muebles",
-            "Estantes y soluciones a medida",
+            "Ensamblado de muebles que llegan desarmados en caja",
+            "Armado de escritorios, bibliotecas, racks y cómodas (según modelo)",
+            "Colocación y regulación de puertas, cajones y herrajes incluidos",
+            "Ajuste y revisión de la estabilidad del mueble terminado",
         ],
         seoTitle: "Armado de muebles importados en Quilmes, Avellaneda y Lanús | Gabriel Survila",
         seoDescription:
-            "Carpintería en Quilmes, Avellaneda y Lanús. Armado de muebles importados y soluciones a medida. Trabajo confiable.",
+            "Armado a domicilio de muebles importados que llegan desarmados en caja. Atención en Quilmes, Avellaneda y Lanús. Consultá por WhatsApp.",
+        details: {
+            heading: "¿Te llegó un mueble desarmado y necesitás ayuda?",
+            paragraphs: [
+                "Muchos muebles comprados por internet se entregan en cajas con paneles, tornillos y herrajes para que el comprador los ensamble. Si no tenés las herramientas, la experiencia o el tiempo para armarlos, podés consultar por este servicio.",
+                "El trabajo consiste en armar el mueble que ya compraste, siguiendo sus instrucciones y ajustando sus componentes según corresponda. No es un servicio de fabricación de muebles a medida: para eso está la sección de carpintería.",
+            ],
+            stepsHeading: "Cómo coordinamos el armado",
+            steps: [
+                "Me enviás una foto de la caja, el modelo o el enlace de compra y, si lo tenés, el instructivo.",
+                "Me contás en qué localidad estás y conversamos qué requiere el armado, incluido si necesita fijación a una pared.",
+                "Acordamos el presupuesto y la visita para realizar el armado en tu domicilio.",
+            ],
+            estimateHint:
+                "Para consultar, enviame el tipo o modelo de mueble, una foto de la caja o del producto y tu localidad. Si necesita amurarse, avisame también.",
+        },
+        whatsappMessage:
+            "Hola Gabriel, compré un mueble desarmado en caja y quisiera consultar por el armado. Estoy en [localidad] y el mueble es [tipo/modelo]. ¿Puedo enviarte fotos?",
     },
     {
         slug: "herreria",

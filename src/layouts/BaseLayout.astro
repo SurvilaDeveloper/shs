@@ -1,7 +1,7 @@
 ---
 // src/layouts/BaseLayout.astro
 import "../styles/global.css";
-import { BRAND } from "../lib/siteData";
+import { BRAND, SERVICES } from "../lib/siteData";
 import LogoSHS from "../components/LogoSHS.astro";
 
 const {
@@ -34,7 +34,6 @@ const telHref = `tel:${String(BRAND.phone || "").replace(/\s/g, "")}`;
 const whatsappUrl = `https://wa.me/${BRAND.whatsappNumber}`;
 
 const homeUrl = `${siteUrl}${BASE}`;
-const serviciosUrl = `${siteUrl}${withBase("/servicios/")}`;
 
 const businessSchema = {
   "@type": "HomeAndConstructionBusiness",
@@ -63,56 +62,12 @@ const servicesListSchema = {
   "@type": "ItemList",
   "@id": `${homeUrl}#services`,
   name: `Servicios de ${BRAND.name}`,
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      url: serviciosUrl,
-      name: "Electricidad",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      url: serviciosUrl,
-      name: "Plomería",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      url: serviciosUrl,
-      name: "Carpintería",
-    },
-    {
-      "@type": "ListItem",
-      position: 4,
-      url: serviciosUrl,
-      name: "Armado de muebles importados",
-    },
-    {
-      "@type": "ListItem",
-      position: 5,
-      url: serviciosUrl,
-      name: "Herrería",
-    },
-    {
-      "@type": "ListItem",
-      position: 6,
-      url: serviciosUrl,
-      name: "Colocación de durlock",
-    },
-    {
-      "@type": "ListItem",
-      position: 7,
-      url: serviciosUrl,
-      name: "Pintura",
-    },
-    {
-      "@type": "ListItem",
-      position: 8,
-      url: serviciosUrl,
-      name: "Reparaciones generales",
-    },
-  ],
+  itemListElement: SERVICES.map((service, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: `${siteUrl}${withBase(`/servicios/${service.slug}/`)}`,
+    name: service.title,
+  })),
 };
 
 const structuredData = {
@@ -278,8 +233,8 @@ const NAV_ITEMS = [
             <p class="font-extrabold text-slate-100">{BRAND.name}</p>
 
             <p class="mt-2">
-              Electricidad · Plomería · Carpintería · Herrería · Pintura ·
-              Durlock · Reparaciones
+              Electricidad · Plomería · Carpintería · Armado de muebles ·
+              Herrería · Pintura · Durlock · Reparaciones
             </p>
           </div>
 

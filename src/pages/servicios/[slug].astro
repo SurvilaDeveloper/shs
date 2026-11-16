@@ -26,18 +26,20 @@ const pageUrl = Astro.url.toString();
 
 const serviceTitle = String(service?.title ?? "Servicio");
 
-const serviceDescription = String(
-    service?.seoDescription ??
-        service?.description ??
-        "Servicios del hogar en AMBA.",
-);
+// La descripción visible explica el servicio; la descripción SEO queda en el <head>.
+const serviceIntro = String(service?.description ?? "Servicios del hogar en AMBA.");
+const serviceDescription = String(service?.seoDescription ?? serviceIntro);
+const details = service?.details;
+const heroImage = service?.heroImage;
+const whatsappMessage =
+    service?.whatsappMessage ?? `Hola Gabriel, necesito ${serviceTitle.toLowerCase()}.`;
 
 const serviceSchema = {
     "@type": "Service",
     "@id": `${pageUrl}#service`,
     name: serviceTitle,
     serviceType: serviceTitle,
-    description: serviceDescription,
+    description: serviceIntro,
     url: pageUrl,
 
     areaServed: Array.isArray(BRAND.coverage)
@@ -80,15 +82,54 @@ const serviceSchema = {
             {serviceTitle}
         </h1>
 
-        <p class="mt-3 max-w-2xl text-slate-300">
-            {serviceDescription}
+        <p class="mt-3 max-w-3xl text-slate-300">
+            {serviceIntro}
         </p>
+
+        {
+            heroImage && (
+                <figure class="mt-7 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/30">
+                    <img
+                        src={withBase(heroImage.src)}
+                        alt={heroImage.alt}
+                        width="1600"
+                        height="900"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                        class="block aspect-video w-full object-cover"
+                    />
+                    {heroImage.caption && (
+                        <figcaption class="px-4 py-3 text-xs text-slate-400">
+                            {heroImage.caption}
+                        </figcaption>
+                    )}
+                </figure>
+            )
+        }
+
+        {
+            details && (
+                <section class="mt-6 rounded-2xl border border-slate-800 bg-slate-900/30 p-6 md:p-8">
+                    <h2 class="text-xl font-extrabold text-slate-100">
+                        {details.heading}
+                    </h2>
+                    {details.paragraphs.map((paragraph: string) => (
+                        <p class="mt-3 max-w-3xl leading-relaxed text-slate-300">
+                            {paragraph}
+                        </p>
+                    ))}
+                </section>
+            )
+        }
 
         <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
             <div
                 class="rounded-2xl border border-slate-800 bg-slate-950/40 p-6"
             >
-                <p class="font-extrabold text-slate-100">Trabajos habituales</p>
+                <h2 class="font-extrabold text-slate-100">
+                    {details ? "Qué incluye el servicio" : "Trabajos habituales"}
+                </h2>
 
                 <ul class="mt-3 list-disc pl-5 text-slate-300">
                     {(service?.bullets ?? []).map((b: string) => <li>{b}</li>)}
@@ -98,17 +139,37 @@ const serviceSchema = {
             <div
                 class="rounded-2xl border border-slate-800 bg-slate-900/30 p-6"
             >
-                <p class="font-extrabold text-slate-100">Presupuesto rápido</p>
+                <h2 class="font-extrabold text-slate-100">Presupuesto rápido</h2>
+                {details?.estimateHint && (
+                    <p class="mt-3 text-sm leading-relaxed text-slate-300">
+                        {details.estimateHint}
+                    </p>
+                )}
 
                 <div class="mt-4">
                     <CTAWhatsApp
                         client:load
                         label="Escribir por WhatsApp"
                         className="w-full"
-                        message={`Hola Gabriel, necesito ${serviceTitle.toLowerCase()}.`}
+                        message={whatsappMessage}
                     />
                 </div>
             </div>
         </div>
+
+        {
+            details && (
+                <section class="mt-6 rounded-2xl border border-slate-800 bg-slate-950/40 p-6 md:p-8">
+                    <h2 class="text-xl font-extrabold text-slate-100">
+                        {details.stepsHeading}
+                    </h2>
+                    <ol class="mt-4 list-decimal space-y-3 pl-5 text-slate-300">
+                        {details.steps.map((step: string) => (
+                            <li class="pl-1 leading-relaxed">{step}</li>
+                        ))}
+                    </ol>
+                </section>
+            )
+        }
     </div>
 </BaseLayout>
