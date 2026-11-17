@@ -4,6 +4,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { BRAND, SERVICES } from "../../lib/siteData";
 import { CTAWhatsApp } from "../../components/CTAWhatsApp";
+import { getCanonicalUrl, getServiceAreas } from "../../lib/seo";
 
 export function getStaticPaths() {
     return SERVICES.map((s) => ({
@@ -18,13 +19,11 @@ const BASE = import.meta.env.BASE_URL;
 
 const withBase = (path: string) => `${BASE}${path.replace(/^\//, "")}`;
 
-const siteUrl =
-    Astro.site?.toString().replace(/\/$/, "") ??
-    `${Astro.url.protocol}//${Astro.url.host}`;
-
-const pageUrl = Astro.url.toString();
+const homeUrl = new URL(BASE, Astro.site ?? Astro.url).toString();
+const pageUrl = getCanonicalUrl(Astro.url.pathname, Astro.site ?? Astro.url);
 
 const serviceTitle = String(service?.title ?? "Servicio");
+const seoTitle = String(service?.seoTitle ?? `${serviceTitle} | ${BRAND.name}`);
 
 // La descripción visible explica el servicio; la descripción SEO queda en el <head>.
 const serviceIntro = String(service?.description ?? "Servicios del hogar en AMBA.");
@@ -42,31 +41,13 @@ const serviceSchema = {
     description: serviceIntro,
     url: pageUrl,
 
-    areaServed: Array.isArray(BRAND.coverage)
-        ? BRAND.coverage.map((city: string) => ({
-              "@type": "City",
-              name: city,
-          }))
-        : [],
-
-    provider: {
-        "@type": "HomeAndConstructionBusiness",
-        "@id": `${siteUrl}${BASE}#business`,
-        name: BRAND.name,
-        url: `${siteUrl}${BASE}`,
-        telephone: BRAND.phone,
-    },
-
-    offers: {
-        "@type": "Offer",
-        availability: "https://schema.org/InStock",
-        url: pageUrl,
-    },
+    areaServed: getServiceAreas(BRAND.coverage),
+    provider: { "@id": `${homeUrl}#business` },
 };
 ---
 
 <BaseLayout
-    title={`${serviceTitle} | ${BRAND.name}`}
+    title={seoTitle}
     description={serviceDescription}
     serviceSchema={serviceSchema}
 >

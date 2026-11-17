@@ -3,6 +3,7 @@
 import "../styles/global.css";
 import { BRAND, SERVICES } from "../lib/siteData";
 import LogoSHS from "../components/LogoSHS.astro";
+import { getCanonicalUrl, getServiceAreas } from "../lib/seo";
 
 const {
   title = BRAND.name,
@@ -24,43 +25,62 @@ const siteUrl =
   Astro.site?.toString().replace(/\/$/, "") ??
   `${Astro.url.protocol}//${Astro.url.host}`;
 
-const currentUrl = Astro.url.toString();
+const canonicalUrl = getCanonicalUrl(Astro.url.pathname, Astro.site ?? Astro.url);
 
 const absoluteOgImage = ogImage.startsWith("http")
   ? ogImage
   : `${siteUrl}${withBase(ogImage)}`;
 
-const telHref = `tel:${String(BRAND.phone || "").replace(/\s/g, "")}`;
-const whatsappUrl = `https://wa.me/${BRAND.whatsappNumber}`;
-
 const homeUrl = `${siteUrl}${BASE}`;
+const servicesUrl = `${siteUrl}${withBase("/servicios/")}`;
+const businessId = `${homeUrl}#business`;
+const websiteId = `${homeUrl}#website`;
 
+// La ficha del negocio mantiene la misma identidad y descripción en todas las páginas.
 const businessSchema = {
   "@type": "HomeAndConstructionBusiness",
-  "@id": `${siteUrl}${BASE}#business`,
+  "@id": businessId,
   name: BRAND.name,
   url: homeUrl,
   telephone: BRAND.phone,
-  image: absoluteOgImage,
-  description,
-  areaServed: Array.isArray(BRAND.coverage)
-    ? BRAND.coverage.map((city: string) => ({
-        "@type": "City",
-        name: city,
-      }))
-    : [],
+  image: `${siteUrl}${withBase("/og.jpg")}`,
+  description:
+    "Servicios del hogar de electricidad, plomería, carpintería, armado de muebles, herrería y reparaciones. Atención en Zona Sur, Buenos Aires.",
+  areaServed: getServiceAreas(BRAND.coverage),
   address: {
     "@type": "PostalAddress",
     addressLocality: BRAND.baseCity,
     addressRegion: "Buenos Aires",
     addressCountry: "AR",
   },
-  sameAs: [whatsappUrl],
 };
 
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: BRAND.name,
+  url: homeUrl,
+  inLanguage: "es-AR",
+};
+
+const webpageSchema = {
+  "@type": "WebPage",
+  "@id": `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: title,
+  description,
+  inLanguage: "es-AR",
+  isPartOf: { "@id": websiteId },
+  about: { "@id": businessId },
+  ...(serviceSchema && {
+    mainEntity: { "@id": `${canonicalUrl}#service` },
+  }),
+};
+
+const isServicesListing = canonicalUrl === homeUrl || canonicalUrl === servicesUrl;
 const servicesListSchema = {
   "@type": "ItemList",
-  "@id": `${homeUrl}#services`,
+  "@id": `${servicesUrl}#services`,
   name: `Servicios de ${BRAND.name}`,
   itemListElement: SERVICES.map((service, index) => ({
     "@type": "ListItem",
@@ -74,7 +94,9 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     businessSchema,
-    servicesListSchema,
+    websiteSchema,
+    webpageSchema,
+    ...(isServicesListing ? [servicesListSchema] : []),
     ...(serviceSchema ? [serviceSchema] : []),
   ],
 };
@@ -101,7 +123,7 @@ const NAV_ITEMS = [
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <link rel="canonical" href={currentUrl} />
+    <link rel="canonical" href={canonicalUrl} />
 
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#0f172a" />
@@ -109,8 +131,9 @@ const NAV_ITEMS = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={currentUrl} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:alt" content="SHS — Servicios del Hogar" />
 
     <meta property="og:locale" content="es_AR" />
     <meta property="og:site_name" content={BRAND.name} />
