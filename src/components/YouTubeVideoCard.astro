@@ -1,0 +1,80 @@
+---
+import type { SiteVideo } from "../lib/videos";
+
+interface Props {
+    video: SiteVideo;
+    videoId: string;
+}
+
+const { video, videoId } = Astro.props;
+const thumbnail = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+---
+
+<article class="min-w-0 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950/40">
+    <div class="relative aspect-video overflow-hidden bg-slate-900" data-video-container>
+        <button
+            type="button"
+            data-video-trigger
+            data-youtube-id={videoId}
+            data-video-title={video.title}
+            aria-label={`Reproducir video: ${video.title}`}
+            class="group relative block h-full w-full cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-emerald-400"
+        >
+            <img
+                src={thumbnail}
+                alt={`Miniatura del video: ${video.title}`}
+                width="480"
+                height="360"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+            <span class="absolute inset-0 bg-black/25 transition group-hover:bg-black/35" aria-hidden="true"></span>
+            <span
+                class="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-red-600 text-white shadow-xl transition group-hover:scale-110 group-hover:bg-red-500"
+                aria-hidden="true"
+            >
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                    <path d="M8 5.3v13.4L19 12 8 5.3Z" />
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <div class="p-5">
+        {video.category && (
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-emerald-400">
+                {video.category}
+            </p>
+        )}
+        <h2 class="mt-2 text-lg font-extrabold text-slate-100">{video.title}</h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-300">{video.description}</p>
+        <a
+            href={video.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 inline-block text-sm font-semibold text-slate-300 underline underline-offset-4 hover:text-white"
+        >
+            Ver en YouTube
+        </a>
+    </div>
+</article>
+
+<!-- Un reproductor se carga solamente al hacer clic sobre la miniatura. -->
+<script>
+    document.querySelectorAll<HTMLButtonElement>("[data-video-trigger]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const id = button.dataset.youtubeId;
+            if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+            iframe.title = `Reproductor de YouTube: ${button.dataset.videoTitle ?? "Video de SHS"}`;
+            iframe.className = "absolute inset-0 h-full w-full";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            button.replaceWith(iframe);
+        });
+    });
+</script>
